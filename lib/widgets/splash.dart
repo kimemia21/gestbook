@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_single_cascade_in_expression_statements
 
 import 'dart:ui';
 
+import 'package:application/widgets/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -12,19 +14,39 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-Widget splashDetails({required icon, required title, required sub}) {
-  return Container(
-    padding: EdgeInsets.all(5),
-    margin: EdgeInsets.all(2),
-    child: ListTile(
-      leading: icon,
-      title: Text(title,style: GoogleFonts.poppins(color:Colors.white,fontWeight:FontWeight.bold,fontSize:14),),
-      subtitle:  Text(sub,style: GoogleFonts.poppins(color:Colors.white,fontWeight:FontWeight.w500,fontSize:11),),
-    ),
-  );
-}
-
 class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 5), () {
+      popups().displayFormDialog(context: context);
+    });
+    Future.delayed(Duration(seconds: 1), () {
+      popups().successINFO(context: context);
+    });
+  }
+
+  Widget splashDetails({required icon, required title, required sub}) {
+    return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.all(2),
+      child: ListTile(
+        leading: icon,
+        title: Text(
+          title,
+          style: GoogleFonts.poppins(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        subtitle: Text(
+          sub,
+          style: GoogleFonts.poppins(
+              color: Colors.white, fontWeight: FontWeight.w500, fontSize: 11),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,7 +58,7 @@ class _SplashPageState extends State<SplashPage> {
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                  "https://mir-s3-cdn-cf.behance.net/project_modules/1400/aa8625109287767.5fd08439c7676.jpg",
+                  "https://img.pikbest.com/wp/202348/advertising-display-stand-illustrated-for-interactive-kiosks-promotions_9779247.jpg!bw700",
                 ))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -52,7 +74,7 @@ class _SplashPageState extends State<SplashPage> {
                   child: Container(
                     width: double.infinity,
                     color: Colors.black.withOpacity(0.1),
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Column(
                       children: [
                         Text(
@@ -64,13 +86,33 @@ class _SplashPageState extends State<SplashPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        splashDetails(icon: Icon(Icons.pin_drop,color: Colors.black54,size: 35,), title: "Pay Us a Visit", sub:"ROAD C, Enterprise Rd, Nairobi"),
+                        splashDetails(
+                            icon: Icon(
+                              Icons.pin_drop,
+                              color: Colors.black54,
+                              size: 35,
+                            ),
+                            title: "Pay Us a Visit",
+                            sub: "ROAD C, Enterprise Rd, Nairobi"),
                         VerticalDivider(),
-                         splashDetails(icon: Icon(Icons.wifi_calling_3,color: Colors.black54,size: 35,) , title: "Give Us a call", sub: "0781033073"),
+                        splashDetails(
+                            icon: Icon(
+                              Icons.wifi_calling_3,
+                              color: Colors.black54,
+                              size: 35,
+                            ),
+                            title: "Give Us a call",
+                            sub: "0781033073"),
                         VerticalDivider(),
-                       splashDetails(icon: Icon(Icons.mail_outline_outlined,color: Colors.black54,size: 35,) , title: "Send Us a Message", sub: "box@gnovation.xyz"),
+                        splashDetails(
+                            icon: Icon(
+                              Icons.mail_outline_outlined,
+                              color: Colors.black54,
+                              size: 35,
+                            ),
+                            title: "Send Us a Message",
+                            sub: "box@gnovation.xyz"),
                         VerticalDivider()
-
                       ],
                     ),
                   ),
