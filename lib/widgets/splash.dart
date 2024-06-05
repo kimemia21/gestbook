@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
 
     // Detect "Enter" key to process QR code
     if (key == 'Enter') {
-      print('QR Code detected: $_barcode');
+    
 
       AuthServices().getGuestInfo(qrCode: _barcode,context: context);
       _barcode = '';
