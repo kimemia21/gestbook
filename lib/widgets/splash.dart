@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_single_cascade_in_expression_statements
 
+import 'dart:html';
 import 'dart:ui';
 
 import 'package:application/widgets/popup.dart';
@@ -15,17 +16,62 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+
+String _barcode = '';
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 5), () {
-      popups().displayFormDialog(context: context);
-    });
-    Future.delayed(Duration(seconds: 1), () {
-      popups().successINFO(context: context);
-    });
+
+    // Add event listener for keyboard events
+    document.addEventListener('keydown', _handleKeyEvent);
   }
+
+  @override
+  void dispose() {
+    // Remove event listener when the widget is disposed
+    document.removeEventListener('keydown', _handleKeyEvent);
+    super.dispose();
+  }
+
+  void _handleKeyEvent(event) {
+    print(event);
+    final key = event.key;
+
+    // Detect "Enter" key to process QR code
+    if (key == 'Enter') {
+      print('QR Code detected: $_barcode');
+
+      _handleQRCode(_barcode);
+      _barcode = '';
+    } else {
+      // Accumulate characters to form the QR code
+      _barcode += key;
+    }
+  }
+
+  void _handleQRCode(String qrCode) {
+    
+
+    // Handle the QR code (e.g., display it or send it to a server)
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('QR Code Detected'),
+        content: Text('QR Code: $qrCode'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+  
+
+
+
 
   Widget splashDetails({required icon, required title, required sub}) {
     return Container(
@@ -58,7 +104,7 @@ class _SplashPageState extends State<SplashPage> {
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                  "https://img.pikbest.com/wp/202348/advertising-display-stand-illustrated-for-interactive-kiosks-promotions_9779247.jpg!bw700",
+                "https://img.pikbest.com/wp/202348/advertising-display-stand-illustrated-for-interactive-kiosks-promotions_9779247.jpg!bw700",
                 ))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
