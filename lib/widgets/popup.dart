@@ -168,7 +168,7 @@ class popups {
     ).show();
   }
 
-  void successINFO({required BuildContext context}) {
+  void successINFO({required BuildContext context, required name}) {
     AwesomeDialog(
 
       autoHide: Duration(seconds: 2),
@@ -182,7 +182,9 @@ class popups {
       dialogType: DialogType.success,
 
       title: 'Details are okey',
-      titleTextStyle:GoogleFonts.poppins(fontWeight:FontWeight.w600,color:Colors.black54,fontSize:10),
+      titleTextStyle:GoogleFonts.poppins(fontWeight:FontWeight.w600,color:Colors.black54,fontSize:12),
+      desc: "Welcome $name to our ai base forum",
+      descTextStyle:GoogleFonts.poppins(fontWeight:FontWeight.w600,color:Colors.black54,fontSize:12), 
       // desc: 'This is also Ignored',
       btnOkOnPress: () {},
     ).show();

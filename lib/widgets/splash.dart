@@ -3,6 +3,7 @@
 import 'dart:html';
 import 'dart:ui';
 
+import 'package:application/widgets/AuthServices.dart';
 import 'package:application/widgets/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +17,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
-String _barcode = '';
+  String _barcode = '';
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ String _barcode = '';
     if (key == 'Enter') {
       print('QR Code detected: $_barcode');
 
-      _handleQRCode(_barcode);
+      AuthServices().getGuestInfo(qrCode: _barcode,context: context);
       _barcode = '';
     } else {
       // Accumulate characters to form the QR code
@@ -50,28 +50,22 @@ String _barcode = '';
     }
   }
 
-  void _handleQRCode(String qrCode) {
-    
-
-    // Handle the QR code (e.g., display it or send it to a server)
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('QR Code Detected'),
-        content: Text('QR Code: $qrCode'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-  
-
-
-
+  // void _handleQRCode(String qrCode) {
+  //   // Handle the QR code (e.g., display it or send it to a server)
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: Text('QR Code Detected'),
+  //       content: Text('QR Code: $qrCode'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.of(context).pop(),
+  //           child: Text('OK'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget splashDetails({required icon, required title, required sub}) {
     return Container(
@@ -104,7 +98,7 @@ String _barcode = '';
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                "https://img.pikbest.com/wp/202348/advertising-display-stand-illustrated-for-interactive-kiosks-promotions_9779247.jpg!bw700",
+                  "https://img.pikbest.com/wp/202348/advertising-display-stand-illustrated-for-interactive-kiosks-promotions_9779247.jpg!bw700",
                 ))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
