@@ -2,13 +2,16 @@ import 'dart:convert';
 
 import 'package:application/widgets/popup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:quickalert/quickalert.dart';
 
 class AuthServices {
   Future<void> getGuestInfo(
       {required qrCode, required BuildContext context}) async {
+        //"0716d9708d321ffb6a00818614779e779925365c"
     final url =
-        "http://143.244.180.244:4303/?k=0716d9708d321ffb6a00818614779e779925365c";
+        "http://143.244.180.244:4303/?k=$qrCode";
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -48,12 +51,13 @@ class AuthServices {
           popups().displayFormDialog(
               context: context,
               name: responseMap["name"],
-              guest_id:responseMap["guest_id"] ,
+              guest_id: responseMap["guest_id"],
               email: responseMap["e_mail"],
               corp: responseMap["corp"]);
         }
       } else {
         print('Request failed with status: ${response.statusCode}');
+        popups().userNotAvailable(context: context);
       }
     } catch (e) {
       print('Error making request: $e');
@@ -63,26 +67,27 @@ class AuthServices {
   }
 
   Future<void> postUserInfo(
-      {required String guest_id, required String email}) async {
+      {required BuildContext context,
+      required String guest_id,
+      required String email}) async {
     final url = Uri.parse("http://143.244.180.244:4303/update-email");
 
     final Map body = {"guestId": guest_id, "email": email};
 
-   try {
-     final response = await http.post(url, body: jsonEncode(body), headers: {
-      "Content-Type": "application/json",
-    });
+    try {
+      final response = await http.post(url, body: jsonEncode(body), headers: {
+        "Content-Type": "application/json",
+      });
 
-    if (response.statusCode == 200) {
-      print("updated : ${response.body}");
-    }
-     else {
+      if (response.statusCode == 200) {
+        popups().addSuccess(context: context);
+
+        print("updated : ${response.body}");
+      } else {
         print('Request failed with status: ${response.statusCode}');
       }
-     
-   } catch (e) {
-     print('Error making request: $e');
-     
-   }
+    } catch (e) {
+      print('Error making request: $e');
+    }
   }
 }
