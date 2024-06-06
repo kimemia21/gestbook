@@ -246,7 +246,7 @@ class popups {
       autoHide: Duration(seconds: 2),
       bodyHeaderDistance: 20,
       width: 500,
-      transitionAnimationDuration: Duration(milliseconds: 200),
+      transitionAnimationDuration: Duration(milliseconds: 400),
       // customHeader: Image.network(
       //     "https://static-00.iconduck.com/assets.00/success-icon-512x512-qdg1isa0.png"),
       context: context,

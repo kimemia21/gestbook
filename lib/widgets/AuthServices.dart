@@ -24,8 +24,8 @@ class AuthServices {
           'corp',
           'name',
           'e_mail',
-          "hello",
-          "world",
+       
+ 
         ];
 
         // Check if all keys are present and their values are not empty
